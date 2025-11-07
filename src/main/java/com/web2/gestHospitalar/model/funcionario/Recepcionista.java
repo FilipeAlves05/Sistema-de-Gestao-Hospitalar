@@ -1,4 +1,4 @@
-package com.web2.gestHospitalar.model;
+package com.web2.gestHospitalar.model.funcionario;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Recepcionista extends Funcionario {
-
     private String setor;
     private String turno;
 }

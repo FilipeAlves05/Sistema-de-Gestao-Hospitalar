@@ -1,4 +1,6 @@
-package com.web2.gestHospitalar.model;
+package com.web2.gestHospitalar.model.estoque;
+
+import com.web2.gestHospitalar.model.prescricao.Medicamento;
 
 import jakarta.persistence.*;
 import lombok.Getter;
