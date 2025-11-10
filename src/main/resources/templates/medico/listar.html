@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Médicos</title>
+</head>
+<body>
+<h1>Médicos</h1>
+
+<a th:href="@{/medicos/novo}">➕ Novo Médico</a>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Nome</th>
+        <th>CRM</th>
+        <th>Especialidade</th>
+        <th>Ações</th>
+    </tr>
+
+    <tr th:each="m : ${medicos}">
+        <td th:text="${m.nome}"></td>
+        <td th:text="${m.crm}"></td>
+        <td th:text="${m.especialidade}"></td>
+        <td>
+            <a th:href="@{'/medicos/' + ${m.id}}">👁 Ver</a> |
+            <a th:href="@{'/medicos/editar/' + ${m.id}}">✏️ Editar</a> |
+            <a th:href="@{'/medicos/excluir/' + ${m.id}}"
+               onclick="return confirm('Tem certeza que deseja excluir?')">❌ Excluir</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

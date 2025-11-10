@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalhes do Médico</title>
+</head>
+<body>
+<h1>Detalhes do Médico</h1>
+
+<p><strong>Nome:</strong> <span th:text="${medico.nome}"></span></p>
+<p><strong>CRM:</strong> <span th:text="${medico.crm}"></span></p>
+<p><strong>Especialidade:</strong> <span th:text="${medico.especialidade}"></span></p>
+<p><strong>Consultório:</strong> <span th:text="${medico.consultorio}"></span></p>
+<p><strong>Horário:</strong> <span th:text="${medico.horarioAtendimento}"></span></p>
+
+<a th:href="@{/medicos}">Voltar</a>
+</body>
+</html>

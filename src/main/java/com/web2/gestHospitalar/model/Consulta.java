@@ -1,4 +1,4 @@
-package com.web2.gestHospitalar.model.consulta;
+package com.web2.gestHospitalar.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -6,10 +6,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import com.web2.gestHospitalar.model.funcionario.Medico;
-import com.web2.gestHospitalar.model.paciente.Paciente;
-import com.web2.gestHospitalar.model.prescricao.Prescricao;
 
 @Entity
 @Getter

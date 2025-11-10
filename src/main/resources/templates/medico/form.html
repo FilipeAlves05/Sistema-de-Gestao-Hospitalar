@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulário Médico</title>
+</head>
+<body>
+
+<form th:object="${medico}" 
+      th:action="@{${medico.id} != null ? '/medicos/atualizar/' + ${medico.id} : '/medicos'}" 
+      method="post">
+
+    <h1 th:text="${#fields.hasErrors()} ? 'Corrija os erros abaixo' : 'Cadastrar / Editar Médico'"></h1>
+
+    <label>Nome:</label>
+    <input type="text" th:field="*{nome}" /><br/>
+    <div th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+
+    <label>CRM:</label>
+    <input type="text" th:field="*{crm}" /><br/>
+    <div th:if="${#fields.hasErrors('crm')}" th:errors="*{crm}"></div>
+
+    <label>Especialidade:</label>
+    <input type="text" th:field="*{especialidade}" /><br/>
+    <div th:if="${#fields.hasErrors('especialidade')}" th:errors="*{especialidade}"></div>
+
+    <label>Consultório:</label>
+    <input type="text" th:field="*{consultorio}" /><br/>
+    <div th:if="${#fields.hasErrors('consultorio')}" th:errors="*{consultorio}"></div>
+
+    <label>Horário de Atendimento:</label>
+    <input type="text" th:field="*{horarioAtendimento}" /><br/>
+    <div th:if="${#fields.hasErrors('horarioAtendimento')}" th:errors="*{horarioAtendimento}"></div>
+
+    <button type="submit">Salvar</button>
+</form>
+
+<br/>
+<a th:href="@{/medicos}">Voltar</a>
+
+</body>
+</html>

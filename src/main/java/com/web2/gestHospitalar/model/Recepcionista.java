@@ -1,4 +1,4 @@
-package com.web2.gestHospitalar.model.funcionario;
+package com.web2.gestHospitalar.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

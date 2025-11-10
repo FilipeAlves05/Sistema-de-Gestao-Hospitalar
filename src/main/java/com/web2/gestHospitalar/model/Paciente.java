@@ -1,16 +1,17 @@
-package com.web2.gestHospitalar.model.funcionario;
+package com.web2.gestHospitalar.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
+
 
 @Entity
 @Getter
 @Setter
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Funcionario {
+public class Paciente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +24,9 @@ public abstract class Funcionario {
     private String endereco;
     private LocalDate dataNascimento;
 
-    private LocalDate dataContratacao;
-    private Double salario;
-    private String cargo;
+    private String convenio;
+    private String alergias;
+
+    @OneToMany(mappedBy = "paciente")
+    private List<Consulta> consultas;
 }
