@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Prescrição</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><i class="fas fa-hospital"></i> Gestão Hospitalar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/pacientes"><i class="fas fa-users"></i> Pacientes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/medicos"><i class="fas fa-stethoscope"></i> Médicos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/consultas"><i class="fas fa-calendar-check"></i> Consultas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prescricoes"><i class="fas fa-prescription-bottle"></i> Prescrições</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/recepcionistas"><i class="fas fa-headset"></i> Recepcionistas</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="fas fa-prescription-bottle"></i> Prescrição</h1>
+                    <p class="text-muted">Preencha os dados da prescrição abaixo</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="/prescricoes" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Voltar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-prescription-bottle"></i> Informações da Prescrição</div>
+                    <div class="card-body">
+                        <form th:action="@{/prescricoes}" method="post" class="needs-validation" novalidate>
+                            <div class="form-section">
+                                <h5>Dados da Prescrição</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="data" class="form-label">Data *</label>
+                                        <input type="date" class="form-control" id="data" name="data" required>
+                                        <div class="invalid-feedback">Data é obrigatória.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="consultaId" class="form-label">Consulta *</label>
+                                        <input type="number" class="form-control" id="consultaId" name="consultaId" required>
+                                        <div class="invalid-feedback">Consulta é obrigatória.</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="observacoes" class="form-label">Observações</label>
+                                        <textarea class="form-control" id="observacoes" name="observacoes" rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Salvar Prescrição</button>
+                                    <a href="/prescricoes" class="btn btn-secondary btn-lg"><i class="fas fa-times"></i> Cancelar</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-info-circle"></i> Informações</div>
+                    <div class="card-body">
+                        <p><strong>Campos obrigatórios:</strong></p>
+                        <ul>
+                            <li>Data</li>
+                            <li>Consulta</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+</body>
+</html>

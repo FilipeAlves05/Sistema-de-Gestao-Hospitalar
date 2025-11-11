@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${paciente.nome}">Paciente - Gestão Hospitalar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .page-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .page-header h1 {
+            color: var(--primary-color);
+        }
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: var(--primary-color);
+            flex: 0 0 30%;
+        }
+
+        .info-value {
+            color: #555;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-warning {
+            background-color: #f39c12;
+            border-color: #f39c12;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+            border-color: #95a5a6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .action-buttons .btn {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-hospital"></i> Gestão Hospitalar
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pacientes"><i class="fas fa-users"></i> Pacientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/medicos"><i class="fas fa-stethoscope"></i> Médicos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/consultas"><i class="fas fa-calendar-check"></i> Consultas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/prescricoes"><i class="fas fa-prescription-bottle"></i> Prescrições</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/recepcionistas"><i class="fas fa-headset"></i> Recepcionistas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container-fluid mt-4">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="fas fa-user-circle"></i> <span th:text="${paciente.nome}"></span></h1>
+                    <p class="text-muted">Detalhes do paciente</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="/pacientes" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Voltar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Info -->
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Dados Pessoais -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-user"></i> Dados Pessoais
+                    </div>
+                    <div class="card-body">
+                        <div class="info-row">
+                            <div class="info-label">ID:</div>
+                            <div class="info-value" th:text="${paciente.id}"></div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Nome:</div>
+                            <div class="info-value" th:text="${paciente.nome}"></div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">CPF:</div>
+                            <div class="info-value" th:text="${paciente.cpf}"></div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Data de Nascimento:</div>
+                            <div class="info-value" th:text="${#temporals.format(paciente.dataNascimento, 'dd/MM/yyyy')}"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contato -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-phone"></i> Contato
+                    </div>
+                    <div class="card-body">
+                        <div class="info-row">
+                            <div class="info-label">Email:</div>
+                            <div class="info-value" th:text="${paciente.email}"></div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Telefone:</div>
+                            <div class="info-value" th:text="${paciente.telefone}"></div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Endereço:</div>
+                            <div class="info-value" th:text="${paciente.endereco}"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informações Médicas -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-heartbeat"></i> Informações Médicas
+                    </div>
+                    <div class="card-body">
+                        <div class="info-row">
+                            <div class="info-label">Convênio:</div>
+                            <div class="info-value" th:text="${paciente.convenio}"></div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Alergias:</div>
+                            <div class="info-value" th:text="${paciente.alergias}"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <a th:href="@{/pacientes/{id}/editar(id=${paciente.id})}" class="btn btn-warning btn-lg">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <form th:action="@{/pacientes/{id}/deletar(id=${paciente.id})}" method="post" style="flex: 1;">
+                        <button type="submit" class="btn btn-danger btn-lg w-100" 
+                                onclick="return confirm('Tem certeza que deseja deletar este paciente?');">
+                            <i class="fas fa-trash"></i> Deletar
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Info Box -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-info-circle"></i> Ações Rápidas
+                    </div>
+                    <div class="card-body">
+                        <a href="/consultas?pacienteId=" class="btn btn-primary w-100 mb-2">
+                            <i class="fas fa-calendar-check"></i> Ver Consultas
+                        </a>
+                        <a href="/prescricoes" class="btn btn-info w-100 mb-2">
+                            <i class="fas fa-prescription-bottle"></i> Ver Prescrições
+                        </a>
+                        <a href="/pacientes" class="btn btn-secondary w-100">
+                            <i class="fas fa-list"></i> Voltar para Lista
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
