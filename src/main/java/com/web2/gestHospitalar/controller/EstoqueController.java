@@ -13,7 +13,7 @@ import com.web2.gestHospitalar.service.EstoqueService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/estoques")
+@RequestMapping("/api/estoque")
 public class EstoqueController {
 
     private final EstoqueService estoqueService;
