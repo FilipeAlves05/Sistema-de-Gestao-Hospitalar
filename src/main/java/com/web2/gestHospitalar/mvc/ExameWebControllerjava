@@ -1,0 +1,118 @@
+package com.web2.gestHospitalar.mvc;
+
+import com.web2.gestHospitalar.model.Exame;
+import com.web2.gestHospitalar.service.ExameService;
+import com.web2.gestHospitalar.repository.PacienteRepository;
+import com.web2.gestHospitalar.repository.MedicoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+@Controller
+@RequestMapping("/exames")
+public class ExamesWebController {
+
+    @Autowired
+    private ExameService exameService;
+
+    @Autowired
+    private PacienteRepository pacienteRepository;
+
+    @Autowired
+    private MedicoRepository medicoRepository;
+
+    @GetMapping("/{id}/visualizar")
+    public String visualizar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        var exame = exameService.get(id);
+        if (exame.isEmpty()) {
+            redirectAttributes.addFlashAttribute("mensagem", "Exame não encontrado!");
+            redirectAttributes.addFlashAttribute("tipo", "error");
+            return "redirect:/exames";
+        }
+        model.addAttribute("exame", exame.get());
+        return "exames/visualizar";
+    }
+
+    @GetMapping
+    public String listar(
+            @RequestParam(required = false) String status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model) {
+        
+        Page<Exame> exames = exameService.list(status, page, size);
+        model.addAttribute("exames", exames.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", exames.getTotalPages());
+        model.addAttribute("status", status);
+        model.addAttribute("pageSize", size);
+        
+        return "exames/lista";
+    }
+
+    @GetMapping("/novo")
+    public String novo(Model model) {
+        model.addAttribute("exame", new Exame());
+        model.addAttribute("pacientes", pacienteRepository.findAll());
+        model.addAttribute("medicos", medicoRepository.findAll());
+        return "exames/form";
+    }
+
+    @PostMapping
+    public String criar(@ModelAttribute Exame exame, RedirectAttributes redirectAttributes) {
+        try {
+            exameService.create(exame);
+            redirectAttributes.addFlashAttribute("mensagem", "Exame criado com sucesso!");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("mensagem", e.getMessage());
+            redirectAttributes.addFlashAttribute("tipo", "error");
+            return "redirect:/exames/novo";
+        }
+        return "redirect:/exames";
+    }
+
+    @GetMapping("/{id}/editar")
+    public String editar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        var exame = exameService.get(id);
+        if (exame.isEmpty()) {
+            redirectAttributes.addFlashAttribute("mensagem", "Exame não encontrado!");
+            redirectAttributes.addFlashAttribute("tipo", "error");
+            return "redirect:/exames";
+        }
+        model.addAttribute("exame", exame.get());
+        model.addAttribute("pacientes", pacienteRepository.findAll());
+        model.addAttribute("medicos", medicoRepository.findAll());
+        return "exames/form";
+    }
+
+    @PostMapping("/{id}")
+    public String atualizar(@PathVariable Long id, @ModelAttribute Exame exame, RedirectAttributes redirectAttributes) {
+        try {
+            exameService.update(id, exame);
+            redirectAttributes.addFlashAttribute("mensagem", "Exame atualizado com sucesso!");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("mensagem", e.getMessage());
+            redirectAttributes.addFlashAttribute("tipo", "error");
+            return "redirect:/exames/" + id + "/editar";
+        }
+        return "redirect:/exames";
+    }
+
+    @PostMapping("/{id}/deletar")
+    public String deletar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            exameService.delete(id);
+            redirectAttributes.addFlashAttribute("mensagem", "Exame removido com sucesso!");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("mensagem", e.getMessage());
+            redirectAttributes.addFlashAttribute("tipo", "error");
+        }
+        return "redirect:/exames";
+    }
+}
