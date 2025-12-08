@@ -20,4 +20,8 @@ public class Estoque {
     @OneToOne
     @JoinColumn(name = "medicamento_id")
     private Medicamento medicamento;
+
+    @ManyToOne
+    @JoinColumn(name = "farmaceutico_id")
+    private Farmaceutico farmaceutico;
 }

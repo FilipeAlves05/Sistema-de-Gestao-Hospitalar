@@ -19,4 +19,7 @@ public class Medico extends Funcionario {
 
     @OneToMany(mappedBy = "medico")
     private List<Consulta> consultas;
+
+    @OneToMany(mappedBy = "medico")
+    private List<Exame> exames;
 }

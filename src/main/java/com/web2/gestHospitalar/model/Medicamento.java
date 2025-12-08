@@ -25,4 +25,8 @@ public class Medicamento {
     @ManyToOne
     @JoinColumn(name = "prescricao_id")
     private Prescricao prescricao;
+
+    @ManyToOne
+    @JoinColumn(name = "farmaceutico_id")
+    private Farmaceutico farmaceutico;
 }

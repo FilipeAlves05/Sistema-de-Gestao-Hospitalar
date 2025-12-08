@@ -24,6 +24,10 @@ public class Prescricao {
     @JoinColumn(name = "consulta_id")
     private Consulta consulta;
 
+    @ManyToOne
+    @JoinColumn(name = "farmaceutico_id")
+    private Farmaceutico farmaceutico;
+
     @OneToMany(mappedBy = "prescricao")
     private List<Medicamento> medicamentos;
 }

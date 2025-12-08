@@ -29,4 +29,7 @@ public class Paciente {
 
     @OneToMany(mappedBy = "paciente")
     private List<Consulta> consultas;
+
+    @OneToMany(mappedBy = "paciente")
+    private List<Exame> exames;
 }
