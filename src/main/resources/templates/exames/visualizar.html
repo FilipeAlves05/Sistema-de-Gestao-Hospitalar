@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${medico.nome}">Médico - Gestão Hospitalar</title>
+    <title>Exame - Gestão Hospitalar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -119,8 +119,18 @@
             font-weight: 500;
         }
 
-        .badge-primary {
-            background-color: var(--secondary-color);
+        .badge-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .badge-warning {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .badge-danger {
+            background-color: var(--danger-color);
             color: white;
         }
     </style>
@@ -172,99 +182,74 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h1><i class="fas fa-user-md"></i> <span th:text="${medico.nome}"></span></h1>
-                    <p class="text-muted">Detalhes do médico</p>
+                    <h1><i class="fas fa-calendar-check"></i> Exame #<span th:text="${exame.id}"></span></h1>
+                    <p class="text-muted">Detalhes do exame</p>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="/medicos" class="btn btn-secondary">
+                    <a href="/exames" class="btn btn-secondary">
                         <i class="fas fa-arrow-left"></i> Voltar
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- Medico Info -->
+        <!-- Exame Info -->
         <div class="row">
             <div class="col-md-8">
-                <!-- Dados Pessoais -->
+                <!-- Informações Básicas -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fas fa-user"></i> Dados Pessoais
+                        <i class="fas fa-info-circle"></i> Informações Básicas
                     </div>
                     <div class="card-body">
                         <div class="info-row">
                             <div class="info-label">ID:</div>
-                            <div class="info-value" th:text="${medico.id}"></div>
+                            <div class="info-value" th:text="${exame.id}"></div>
                         </div>
                         <div class="info-row">
-                            <div class="info-label">Nome:</div>
-                            <div class="info-value" th:text="${medico.nome}"></div>
+                            <div class="info-label">Paciente:</div>
+                            <div class="info-value" th:text="${exame.paciente.nome}"></div>
                         </div>
                         <div class="info-row">
-                            <div class="info-label">CPF:</div>
-                            <div class="info-value" th:text="${medico.cpf}"></div>
+                            <div class="info-label">Médico:</div>
+                            <div class="info-value" th:text="${exame.medico.nome}"></div>
                         </div>
                         <div class="info-row">
-                            <div class="info-label">Data de Nascimento:</div>
-                            <div class="info-value" th:text="${#temporals.format(medico.dataNascimento, 'dd/MM/yyyy')}"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Contato -->
-                <div class="card">
-                    <div class="card-header">
-                        <i class="fas fa-phone"></i> Contato
-                    </div>
-                    <div class="card-body">
-                        <div class="info-row">
-                            <div class="info-label">Email:</div>
-                            <div class="info-value" th:text="${medico.email}"></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Telefone:</div>
-                            <div class="info-value" th:text="${medico.telefone}"></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Endereço:</div>
-                            <div class="info-value" th:text="${medico.endereco}"></div>
+                            <div class="info-label">Data e Hora:</div>
+                            <div class="info-value" th:text="${#temporals.format(exame.dataHora, 'dd/MM/yyyy HH:mm')}"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Informações Profissionais -->
+                <!-- Detalhes -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fas fa-stethoscope"></i> Informações Profissionais
+                        <i class="fas fa-stethoscope"></i> Detalhes
                     </div>
                     <div class="card-body">
                         <div class="info-row">
-                            <div class="info-label">CRM:</div>
-                            <div class="info-value"><span class="badge badge-primary" th:text="${medico.crm}"></span></div>
+                            <div class="info-label">Status:</div>
+                            <div class="info-value">
+                                <span th:if="${exame.status == 'Agendada'}" class="badge badge-warning" th:text="${exame.status}"></span>
+                                <span th:if="${exame.status == 'Realizada'}" class="badge badge-success" th:text="${exame.status}"></span>
+                                <span th:if="${exame.status == 'Cancelada'}" class="badge badge-danger" th:text="${exame.status}"></span>
+                            </div>
                         </div>
                         <div class="info-row">
-                            <div class="info-label">Especialidade:</div>
-                            <div class="info-value" th:text="${medico.especialidade}"></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Consultório:</div>
-                            <div class="info-value" th:text="${medico.consultorio}"></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Horário de Atendimento:</div>
-                            <div class="info-value" th:text="${medico.horarioAtendimento}"></div>
+                            <div class="info-label">Motivo:</div>
+                            <div class="info-value" th:text="${exame.motivo}"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="action-buttons">
-                    <a th:href="@{/medicos/{id}/editar(id=${medico.id})}" class="btn btn-warning btn-lg">
+                    <a th:href="@{/exames/{id}/editar(id=${exame.id})}" class="btn btn-warning btn-lg">
                         <i class="fas fa-edit"></i> Editar
                     </a>
-                    <form th:action="@{/medicos/{id}/deletar(id=${medico.id})}" method="post" style="flex: 1;">
+                    <form th:action="@{/exames/{id}/deletar(id=${exame.id})}" method="post" style="flex: 1;">
                         <button type="submit" class="btn btn-danger btn-lg w-100" 
-                                onclick="return confirm('Tem certeza que deseja deletar este médico?');">
+                                onclick="return confirm('Tem certeza que deseja deletar este exame?');">
                             <i class="fas fa-trash"></i> Deletar
                         </button>
                     </form>
@@ -278,10 +263,13 @@
                         <i class="fas fa-info-circle"></i> Ações Rápidas
                     </div>
                     <div class="card-body">
-                        <a href="/consultas" class="btn btn-primary w-100 mb-2">
-                            <i class="fas fa-calendar-check"></i> Ver Consultas
+                        <a th:href="@{/pacientes/{id}/visualizar(id=${exame.paciente.id})}" class="btn btn-primary w-100 mb-2">
+                            <i class="fas fa-user"></i> Ver Paciente
                         </a>
-                        <a href="/medicos" class="btn btn-secondary w-100">
+                        <a th:href="@{/medicos/{id}/visualizar(id=${exame.medico.id})}" class="btn btn-info w-100 mb-2">
+                            <i class="fas fa-stethoscope"></i> Ver Médico
+                        </a>
+                        <a href="/exames" class="btn btn-secondary w-100">
                             <i class="fas fa-list"></i> Voltar para Lista
                         </a>
                     </div>

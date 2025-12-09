@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pacientes - Gestão Hospitalar</title>
+    <title>Exames - Gestão Hospitalar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -119,15 +119,36 @@
             margin-bottom: 1.5rem;
         }
 
-        .search-box input {
+        .search-box input, .search-box select {
             border-radius: 6px;
             border: 1px solid #ddd;
             padding: 0.75rem;
         }
 
-        .search-box input:focus {
+        .search-box input:focus, .search-box select:focus {
             border-color: var(--secondary-color);
             box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .badge {
+            padding: 0.5rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .badge-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .badge-warning {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        .badge-danger {
+            background-color: var(--danger-color);
+            color: white;
         }
     </style>
 </head>
@@ -184,12 +205,12 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h1><i class="fas fa-users"></i> Pacientes</h1>
-                    <p class="text-muted">Gerenciamento de pacientes do hospital</p>
+                    <h1><i class="fas fa-calendar-check"></i> Exames</h1>
+                    <p class="text-muted">Gerenciamento de exames do hospital</p>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="/pacientes/novo" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Novo Paciente
+                    <a href="/exames/novo" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Novo Exame
                     </a>
                 </div>
             </div>
@@ -198,14 +219,18 @@
         <!-- Search Box -->
         <div class="card search-box">
             <div class="card-body">
-                <form method="get" action="/pacientes" class="row g-3">
+                <form method="get" action="/exames" class="row g-3">
                     <div class="col-md-8">
-                        <input type="text" name="nome" class="form-control" placeholder="Buscar por nome..." 
-                               th:value="${nome}">
+                        <select name="status" class="form-select">
+                            <option value="">Filtrar por status...</option>
+                            <option value="Agendada">Agendado</option>
+                            <option value="Realizada">Realizado</option>
+                            <option value="Cancelada">Cancelado</option>
+                        </select>
                     </div>
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-primary w-100">
-                            <i class="fas fa-search"></i> Buscar
+                            <i class="fas fa-search"></i> Filtrar
                         </button>
                     </div>
                 </form>
@@ -215,7 +240,7 @@
         <!-- Table -->
         <div class="card">
             <div class="card-header">
-                <i class="fas fa-list"></i> Lista de Pacientes
+                <i class="fas fa-list"></i> Lista de Exames
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -223,35 +248,39 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nome</th>
-                                <th>CPF</th>
-                                <th>Email</th>
-                                <th>Telefone</th>
-                                <th>Convênio</th>
+                                <th>Paciente</th>
+                                <th>Médico</th>
+                                <th>Data/Hora</th>
+                                <th>Motivo</th>
+                                <th>Status</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="paciente : ${pacientes}">
-                                <td th:text="${paciente.id}"></td>
-                                <td th:text="${paciente.nome}"></td>
-                                <td th:text="${paciente.cpf}"></td>
-                                <td th:text="${paciente.email}"></td>
-                                <td th:text="${paciente.telefone}"></td>
-                                <td th:text="${paciente.convenio}"></td>
+                            <tr th:each="exame : ${exames}">
+                                <td th:text="${exame.id}"></td>
+                                <td th:text="${exame.paciente.nome}"></td>
+                                <td th:text="${exame.medico.nome}"></td>
+                                <td th:text="${#temporals.format(exame.dataHora, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td th:text="${exame.motivo}"></td>
+                                <td>
+                                    <span th:if="${exame.status == 'Agendada'}" class="badge badge-warning" th:text="${exame.status}"></span>
+                                    <span th:if="${exame.status == 'Realizada'}" class="badge badge-success" th:text="${exame.status}"></span>
+                                    <span th:if="${exame.status == 'Cancelada'}" class="badge badge-danger" th:text="${exame.status}"></span>
+                                </td>
                                 <td>
                                     <div class="action-buttons">
-                                        <a th:href="@{/pacientes/{id}/visualizar(id=${paciente.id})}" 
+                                        <a th:href="@{/exames/{id}/visualizar(id=${exame.id})}" 
                                            class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i> Ver
                                         </a>
-                                        <a th:href="@{/pacientes/{id}/editar(id=${paciente.id})}" 
+                                        <a th:href="@{/exames/{id}/editar(id=${exame.id})}" 
                                            class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
-                                        <form th:action="@{/pacientes/{id}/deletar(id=${paciente.id})}" 
+                                        <form th:action="@{/exames/{id}/deletar(id=${exame.id})}" 
                                               method="post" style="display:inline;" 
-                                              onsubmit="return confirm('Tem certeza que deseja deletar este paciente?');">
+                                              onsubmit="return confirm('Tem certeza que deseja deletar este exame?');">
                                             <button type="submit" class="btn btn-danger btn-sm">
                                                 <i class="fas fa-trash"></i> Deletar
                                             </button>
@@ -259,9 +288,9 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr th:if="${#lists.isEmpty(pacientes)}">
+                            <tr th:if="${#lists.isEmpty(exames)}">
                                 <td colspan="7" class="text-center text-muted py-4">
-                                    <i class="fas fa-inbox"></i> Nenhum paciente encontrado
+                                    <i class="fas fa-inbox"></i> Nenhum exame encontrado
                                 </td>
                             </tr>
                         </tbody>
@@ -274,17 +303,17 @@
         <nav th:if="${totalPages > 1}" aria-label="Page navigation" class="mt-4">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/pacientes(page=${currentPage - 1}, nome=${nome})}">
+                    <a class="page-link" th:href="@{/exames(page=${currentPage - 1}, status=${status})}">
                         <i class="fas fa-chevron-left"></i> Anterior
                     </a>
                 </li>
                 <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" 
                     th:classappend="${currentPage == i} ? 'active'">
-                    <a class="page-link" th:href="@{/pacientes(page=${i}, nome=${nome})}" 
+                    <a class="page-link" th:href="@{/exames(page=${i}, status=${status})}" 
                        th:text="${i + 1}"></a>
                 </li>
                 <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
-                    <a class="page-link" th:href="@{/pacientes(page=${currentPage + 1}, nome=${nome})}">
+                    <a class="page-link" th:href="@{/exames(page=${currentPage + 1}, status=${status})}">
                         Próximo <i class="fas fa-chevron-right"></i>
                     </a>
                 </li>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Prescrição</title>
+    <title>Formulário de Exame</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
@@ -34,11 +34,11 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h1><i class="fas fa-prescription-bottle"></i> Prescrição</h1>
-                    <p class="text-muted">Preencha os dados da prescrição abaixo</p>
+                    <h1><i class="fas fa-calendar-check"></i> Exame</h1>
+                    <p class="text-muted">Preencha os dados do exame abaixo</p>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="/prescricoes" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Voltar</a>
+                    <a href="/exames" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Voltar</a>
                 </div>
             </div>
         </div>
@@ -46,35 +46,51 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header"><i class="fas fa-prescription-bottle"></i> Informações da Prescrição</div>
+                    <div class="card-header"><i class="fas fa-calendar-check"></i> Informações do Exame</div>
                     <div class="card-body">
-                        <form th:action="@{/prescricoes}" method="post" class="needs-validation" novalidate>
+                        <form th:action="@{/exames}" method="post" class="needs-validation" novalidate>
                             <div class="form-section">
-                                <h5>Dados da Prescrição</h5>
+                                <h5>Dados do Exame</h5>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="data" class="form-label">Data *</label>
-                                        <input type="date" class="form-control" id="data" name="data" required>
-                                        <div class="invalid-feedback">Data é obrigatória.</div>
+                                        <label for="dataHora" class="form-label">Data e Hora *</label>
+                                        <input type="datetime-local" class="form-control" id="dataHora" name="dataHora" required>
+                                        <div class="invalid-feedback">Data e hora são obrigatórias.</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="consultaId" class="form-label">Consulta *</label>
-                                        <input type="number" class="form-control" id="consultaId" name="consultaId" required>
-                                        <div class="invalid-feedback">Consulta é obrigatória.</div>
+                                        <label for="status" class="form-label">Status *</label>
+                                        <input type="text" class="form-control" id="status" name="status" required>
+                                        <div class="invalid-feedback">Status é obrigatório.</div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
-                                        <label for="observacoes" class="form-label">Observações</label>
-                                        <textarea class="form-control" id="observacoes" name="observacoes" rows="4"></textarea>
+                                        <label for="motivo" class="form-label">Motivo</label>
+                                        <textarea class="form-control" id="motivo" name="motivo" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5>Relacionamentos</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="pacienteId" class="form-label">Paciente *</label>
+                                        <input type="number" class="form-control" id="pacienteId" name="pacienteId" required>
+                                        <div class="invalid-feedback">Paciente é obrigatório.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="medicoId" class="form-label">Médico *</label>
+                                        <input type="number" class="form-control" id="medicoId" name="medicoId" required>
+                                        <div class="invalid-feedback">Médico é obrigatório.</div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row mt-4">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Salvar Prescrição</button>
-                                    <a href="/prescricoes" class="btn btn-secondary btn-lg"><i class="fas fa-times"></i> Cancelar</a>
+                                    <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Salvar Exame</button>
+                                    <a href="/exames" class="btn btn-secondary btn-lg"><i class="fas fa-times"></i> Cancelar</a>
                                 </div>
                             </div>
                         </form>
@@ -87,8 +103,10 @@
                     <div class="card-body">
                         <p><strong>Campos obrigatórios:</strong></p>
                         <ul>
-                            <li>Data</li>
-                            <li>Consulta</li>
+                            <li>Data e Hora</li>
+                            <li>Status</li>
+                            <li>Paciente</li>
+                            <li>Médico</li>
                         </ul>
                     </div>
                 </div>

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/estoque")
+@RequestMapping("/estoques")
 public class EstoqueWebController {
 
     @Autowired
@@ -42,9 +42,9 @@ public class EstoqueWebController {
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("mensagem", e.getMessage());
             redirectAttributes.addFlashAttribute("tipo", "error");
-            return "redirect:/estoque/novo";
+            return "redirect:/estoques/novo";
         }
-        return "redirect:/estoque";
+        return "redirect:/estoques";
     }
 
     @PutMapping("/{id}")
@@ -56,9 +56,9 @@ public class EstoqueWebController {
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("mensagem", e.getMessage());
             redirectAttributes.addFlashAttribute("tipo", "error");
-            return "redirect:/estoque/" + id + "/editar";
+            return "redirect:/estoques/" + id + "/editar";
         }
-        return "redirect:/estoque";
+        return "redirect:/estoques";
     }
 
     @GetMapping("/{id}/visualizar")
@@ -67,7 +67,7 @@ public class EstoqueWebController {
         if (estoque.equals(null)) {
             redirectAttributes.addFlashAttribute("mensagem", "Estoque não encontrado!");
             redirectAttributes.addFlashAttribute("tipo", "error");
-            return "redirect:/estoque";
+            return "redirect:/estoques";
         }
         model.addAttribute("estoque", estoque);
         return "estoque/visualizar";
@@ -83,6 +83,6 @@ public class EstoqueWebController {
             redirectAttributes.addFlashAttribute("mensagem", e.getMessage());
             redirectAttributes.addFlashAttribute("tipo", "error");
         }
-        return "redirect:/estoque";
+        return "redirect:/estoques";
     }
 }

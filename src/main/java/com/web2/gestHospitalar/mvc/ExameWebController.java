@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/exames")
-public class ExamesWebController {
+public class ExameWebController {
 
     @Autowired
     private ExameService exameService;
