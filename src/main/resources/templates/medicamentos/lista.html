@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicamentos - Gestão Hospitalar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .page-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .page-header h1 {
+            color: var(--primary-color);
+        }
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+
+        .table {
+            background-color: white;
+        }
+
+        .table thead {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-warning {
+            background-color: #f39c12;
+            border-color: #f39c12;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+
+        .btn-info {
+            background-color: #16a085;
+            border-color: #16a085;
+        }
+
+        .alert {
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-buttons .btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.875rem;
+        }
+
+        .search-box {
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box input, .search-box select {
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+        }
+
+        .search-box input:focus, .search-box select:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .badge {
+            padding: 0.5rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .badge-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .badge-warning {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .badge-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-hospital"></i> Gestão Hospitalar
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pacientes"><i class="fas fa-users"></i> Pacientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/medicos"><i class="fas fa-stethoscope"></i> Médicos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/consultas"><i class="fas fa-calendar-check"></i> Consultas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/exames"><i class="fas fa-vials"></i> Exames</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/prescricoes"><i class="fas fa-prescription-bottle"></i> Prescrições</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/medicamentos"><i class="fas fa-pills"></i> Medicamentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/estoques"><i class="fas fa-warehouse"></i> Estoques</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/recepcionistas"><i class="fas fa-headset"></i> Recepcionistas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container-fluid mt-4">
+        <!-- Messages -->
+        <div th:if="${mensagem}" th:class="'alert alert-' + ${tipo}">
+            <i th:class="'fas fa-' + (${tipo} == 'success' ? 'check-circle' : 'exclamation-circle')"></i>
+            <span th:text="${mensagem}"></span>
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="fas fa-pills"></i> Medicamentos</h1>
+                    <p class="text-muted">Gerenciamento de medicamentos do hospital</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="/medicamentos/novo" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Novo Medicamento
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Box -->
+        <div class="card search-box">
+            <div class="card-body">
+                <form method="get" action="/medicamentos" class="row g-3">
+                    <div class="col-md-8">
+                        <input type="text" name="busca" class="form-control" placeholder="Buscar por nome ou tipo..." th:value="${busca}">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-list"></i> Lista de Medicamentos
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Tipo</th>
+                                <th>Validade</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="medicamento : ${medicamentos}">
+                                <td th:text="${medicamento.id}"></td>
+                                <td th:text="${medicamento.nome}"></td>
+                                <td th:text="${medicamento.tipo}"></td>
+                                <td th:text="${#temporals.format(medicamento.validade, 'dd/MM/yyyy')}"></td>
+                                <td>
+                                    <span th:if="${#temporals.day(medicamento.validade) > #temporals.day(#temporals.createNow())}" 
+                                          class="badge badge-success">Válido</span>
+                                    <span th:if="${#temporals.day(medicamento.validade) <= #temporals.day(#temporals.createNow())}" 
+                                          class="badge badge-danger">Vencido</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a th:href="@{/medicamentos/{id}/visualizar(id=${medicamento.id})}" 
+                                           class="btn btn-info btn-sm">
+                                            <i class="fas fa-eye"></i> Ver
+                                        </a>
+                                        <a th:href="@{/medicamentos/{id}/editar(id=${medicamento.id})}" 
+                                           class="btn btn-warning btn-sm">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </a>
+                                        <form th:action="@{/medicamentos/{id}/deletar(id=${medicamento.id})}" 
+                                              method="post" style="display:inline;" 
+                                              onsubmit="return confirm('Tem certeza que deseja deletar este medicamento?');">
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-trash"></i> Deletar
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(medicamentos)}">
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    <i class="fas fa-inbox"></i> Nenhum medicamento encontrado
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav th:if="${totalPages > 1}" aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/medicamentos(page=${currentPage - 1}, busca=${busca})}">
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" 
+                    th:classappend="${currentPage == i} ? 'active'">
+                    <a class="page-link" th:href="@{/medicamentos(page=${i}, busca=${busca})}" 
+                       th:text="${i + 1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/medicamentos(page=${currentPage + 1}, busca=${busca})}">
+                        Próximo <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

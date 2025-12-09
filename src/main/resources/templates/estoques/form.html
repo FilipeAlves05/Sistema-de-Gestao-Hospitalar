@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Estoque</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><i class="fas fa-hospital"></i> Gestão Hospitalar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/pacientes"><i class="fas fa-users"></i> Pacientes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/medicos"><i class="fas fa-stethoscope"></i> Médicos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/consultas"><i class="fas fa-calendar-check"></i> Consultas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/exames"><i class="fas fa-vials"></i> Exames</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prescricoes"><i class="fas fa-prescription-bottle"></i> Prescrições</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/medicamentos"><i class="fas fa-pills"></i> Medicamentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/estoques"><i class="fas fa-warehouse"></i> Estoques</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/recepcionistas"><i class="fas fa-headset"></i> Recepcionistas</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="fas fa-warehouse"></i> Estoque</h1>
+                    <p class="text-muted">Preencha os dados do estoque abaixo</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="/estoques" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Voltar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-warehouse"></i> Informações do Estoque</div>
+                    <div class="card-body">
+                        <form th:action="@{/estoques}" method="post" class="needs-validation" novalidate>
+                            <div class="form-section">
+                                <h5>Dados do Estoque</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="localizacao" class="form-label">Localização *</label>
+                                        <input type="text" class="form-control" id="localizacao" name="localizacao" 
+                                               placeholder="Ex: Prateleira A1, Sala 5" required>
+                                        <div class="invalid-feedback">A localização é obrigatória.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="quantidadeDisponivel" class="form-label">Quantidade Disponível *</label>
+                                        <input type="number" class="form-control" id="quantidadeDisponivel" name="quantidadeDisponivel" 
+                                               min="0" required>
+                                        <div class="invalid-feedback">A quantidade é obrigatória.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5>Relacionamentos</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="medicamentoId" class="form-label">Medicamento *</label>
+                                        <input type="number" class="form-control" id="medicamentoId" name="medicamentoId" required>
+                                        <div class="invalid-feedback">O medicamento é obrigatório.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="farmaceuticoId" class="form-label">Farmacêutico</label>
+                                        <input type="number" class="form-control" id="farmaceuticoId" name="farmaceuticoId">
+                                        <small class="text-muted">Opcional - ID do farmacêutico responsável</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Salvar Estoque</button>
+                                    <a href="/estoques" class="btn btn-secondary btn-lg"><i class="fas fa-times"></i> Cancelar</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-info-circle"></i> Informações</div>
+                    <div class="card-body">
+                        <p><strong>Campos obrigatórios:</strong></p>
+                        <ul>
+                            <li>Localização</li>
+                            <li>Quantidade Disponível</li>
+                            <li>Medicamento</li>
+                        </ul>
+                        <hr>
+                        <p><strong>Dica:</strong></p>
+                        <p class="text-muted">Mantenha sempre atualizado o estoque para evitar falta de medicamentos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+</body>
+</html>
