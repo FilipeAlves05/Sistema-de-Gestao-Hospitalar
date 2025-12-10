@@ -2,6 +2,8 @@ package com.web2.gestHospitalar.model;
 
 import java.util.List;
 
+import com.web2.gestHospitalar.security.Usuario;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,4 +30,8 @@ public class Farmaceutico {
 
     @OneToMany(mappedBy = "farmaceutico")
     private List<Estoque> estoques;
+
+    @OneToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 }

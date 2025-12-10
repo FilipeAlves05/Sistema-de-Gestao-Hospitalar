@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.util.List;
 
+import com.web2.gestHospitalar.security.Usuario;
+
 @Entity
 @Getter
 @Setter
@@ -22,4 +24,8 @@ public class Medico extends Funcionario {
 
     @OneToMany(mappedBy = "medico")
     private List<Exame> exames;
+
+    @OneToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 }

@@ -7,6 +7,8 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.web2.gestHospitalar.security.Usuario;
+
 
 @Entity
 @Getter
@@ -32,4 +34,8 @@ public class Paciente {
 
     @OneToMany(mappedBy = "paciente")
     private List<Exame> exames;
+
+    @OneToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 }

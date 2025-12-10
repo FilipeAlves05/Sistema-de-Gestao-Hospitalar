@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+
 @Entity
 @Getter
 @Setter
@@ -15,8 +16,7 @@ public abstract class Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    
+
     private String nome;
     @Column(nullable = false, unique = true)
     private String cpf;
@@ -29,4 +29,5 @@ public abstract class Funcionario {
     private LocalDate dataContratacao;
     private Double salario;
     private String cargo;
+
 }
