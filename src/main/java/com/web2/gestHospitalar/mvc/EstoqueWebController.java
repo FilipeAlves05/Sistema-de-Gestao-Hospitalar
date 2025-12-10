@@ -24,13 +24,13 @@ public class EstoqueWebController {
         List<EstoqueDTO> estoques = estoqueService.listarEstoques();
         model.addAttribute("estoque", estoques);
 
-        return "estoque/lista";
+        return "estoques/lista";
     }
 
     @GetMapping("/novo")
     public String novo(Model model) {
         model.addAttribute("estoque", new Estoque());
-        return "estoque/form";
+        return "estoques/form";
     }
 
     @PostMapping
@@ -70,7 +70,7 @@ public class EstoqueWebController {
             return "redirect:/estoques";
         }
         model.addAttribute("estoque", estoque);
-        return "estoque/visualizar";
+        return "estoques/visualizar";
     }
 
     @PostMapping("/{id}/deletar")
